@@ -89,7 +89,7 @@ void ADC::captura(){
   }
   if(_opcion==1){
     cout<<" Opcion 1) Frecuencia de muestreo especifica seleccionada"<<endl;
-    cout<<" Dame la Frecuencia de muestreo: ";
+    cout<<" Dame la Frecuencia de muestreo (Hz): ";
     cin>>_frec_m;
   }
   if(_opcion==2){
