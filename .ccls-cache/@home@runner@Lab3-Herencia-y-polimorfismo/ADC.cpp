@@ -17,9 +17,15 @@ void cleanBuffIn(void);
 /************************************************
 *                  CONSTRUCTOR 
 ************************************************/
-ADC::ADC(int Resolucion, float frec_m, int canal, float voltaje, int digital){
+ADC::ADC(int Resolucion, int opcion, float frec_m, int canal, float voltaje, int digital){
   _Resolucion=Resolucion;
-  _frec_m=frec_m;
+  _opcion=opcion;
+  if(opcion==1){
+    _frec_m=frec_m;
+  }
+  if(opcion==2){
+    _frec_m=8000000/frec_m;
+  }
   _canal=canal;
   _voltaje=voltaje;
   _digital=digital;
@@ -29,6 +35,7 @@ ADC::ADC(int Resolucion, float frec_m, int canal, float voltaje, int digital){
 }
 ADC::ADC(){
   _Resolucion=0;
+  _opcion=1;
   _frec_m=0;
   _canal=0;
   _voltaje=0;
@@ -42,22 +49,19 @@ ADC::ADC(){
 ************************************************/
 void ADC::muestradatos(){
   cout<<endl<<"** Imprimiendo Datos **"<<endl;
-  cout<<"Canal: AN"<<_canal<<endl;
-  cout<<"Resolucion: "<<_Resolucion<<endl;
-  cout<<"Frecuencia de muestreo: "<<_frec_m<<endl;
-  cout<<"Lectura: "<<_voltaje<<"v"<<endl;
-  cout<<"Valor Digital: "<<_digital<<endl;
+  cout<<" Canal: AN"<<_canal<<endl;
+  cout<<" Resolucion: "<<_Resolucion<<endl;
+  cout<<" Opcion: "<<_opcion<<endl;
 }
 void ADC::captura(){
-  int x=0,y=0;
+  int x=0,y=0,z=0,w=0;
+  float frec_m;
   cout<<endl<<"** Introduce Datos **"<<endl;
-  cout<<"Elemento:"<<_num<<endl;
-  cout<<"Dame la resolucion (8, 10 o 12 bits): ";
-  while(x==0||(_Resolucion!=8 && _Resolucion!=10 && _Resolucion!=12)){
+  cout<<" Elemento:"<<_num<<endl;
+  cout<<" Dame la resolucion (8, 10 o 12 bits): ";
+  while(x==0 || (_Resolucion!=8 && _Resolucion!=10 && _Resolucion!=12)){
     cleanBuffIn();
-  x=scanf("%d",&_Resolucion);
-          
-    
+    x=scanf("%d",&_Resolucion);      
     if(x==0){
       cout<<" Error, la entrada es incorrecta"<<endl;
       cout<<" Introduzca la resolucion otra vez (8, 10 0 12 bits): ";
@@ -67,19 +71,62 @@ void ADC::captura(){
       cout<<" Introduzca la resolucion otra vez (8, 10, 12 bits): ";
     }
   }  
-  cout<<"Dame la Frecuencia de muestreo: ";
-  cin>>_frec_m;
-  cout<<"Dame el No. de canal (1-32): ";
-    while(y==0||(_canal<1 && _canal>32)){
+  cout<<" Opciones para la Frecuencia de muestreo"<<endl;  
+  cout<<"   Opcion 1) Frecuencia de muestreo especifica"<<endl;
+  cout<<"   Opcion 2) Frecuencia de muestreo estantar de 125KHz a 4MHz"<<endl;
+  cout<<" Escoje una opcion: ";
+  while(y==0 || (_opcion!=1 && _opcion!=2)){
     cleanBuffIn();
-    y=scanf("%d",&_canal);
+    y=scanf("%d",&_opcion);
     if(y==0){
       cout<<" Error, la entrada es incorrecta"<<endl;
-      cout<<" Introduzca el No de canal otra vez (8, 10 0 12 bits): "<<endl;
+      cout<<" Introduzca la opcion otra vez (1 o 2): ";
     }
-    if(y==1 && (_canal<1 && _canal>32)){
+    if(y==1 && (_opcion!=1 && _opcion!=2)){
+      cout<<" Error, opcion invalida"<<endl;
+      cout<<" Introduzca la opcion otra vez (1 o 2): ";
+    }
+  }
+  if(_opcion==1){
+    cout<<" Opcion 1) Frecuencia de muestreo especifica seleccionada"<<endl;
+    cout<<" Dame la Frecuencia de muestreo: ";
+    cin>>_frec_m;
+  }
+  if(_opcion==2){
+    cout<<" Opcion 2) Frecuencia de muestreo estandar de 125KHz a 4MHz seleccionada"<<endl;
+    cout<<" Factores para la frecuencia de muestreo"<<endl;
+    cout<<"  2 para 4MHz"<<endl;
+    cout<<"  4 para 2MHz"<<endl;
+    cout<<"  8 para 1MHz"<<endl;
+    cout<<"  16 para 500KHz"<<endl;
+    cout<<"  32 para 250KHz"<<endl;
+    cout<<"  64 para 125KHz"<<endl;
+    cout<<" Escoje el factor de divicion: ";
+    while(w==0 || (frec_m!=2 && frec_m!=4 && frec_m!=8 && frec_m!=16 && frec_m!=32 && frec_m!=64)){
+      cleanBuffIn();
+      w=scanf("%f",&frec_m);
+      if(w==0){
+        cout<<" Error, la entrada es incorrecta"<<endl;
+        cout<<" Introduzca el factor otra vez (2, 4, 8, 16 o 32): ";
+      }
+      if(w==1 && (frec_m!=2 && frec_m!=4 && frec_m!=8 && frec_m!=16 && frec_m!=32 && frec_m!=64)){
+        cout<<" Error, factor invalido"<<endl;
+        cout<<" Introduzca el factor otra vez (2, 4, 8, 16 o 32): ";
+      }
+    }
+    _frec_m=8000000/frec_m;
+  }
+  cout<<" Dame el No. de canal (1-32): ";
+  while(z==0 || _canal<1 || _canal>32){
+    cleanBuffIn();
+    z=scanf("%d",&_canal);
+    if(z==0){
+      cout<<" Error, la entrada es incorrecta"<<endl;
+      cout<<" Introduzca el No de canal otra vez (1-32): ";
+    }
+    if(z==1 && (_canal<1 || _canal>32)){
       cout<<" Error, resolucion no soportada"<<endl;
-      cout<<" Introduzca el No de canal otra vez (8, 10, 12 bits): "<<endl;
+      cout<<" Introduzca el No de canal otra vez (1-32): ";
     }
   } 
 }
@@ -96,10 +143,21 @@ int ADC::getn_canales(){
 *   			SETERS
 ************************************************/
 void ADC::capVoltaje(){
+  int x=0;
   cout<<"** Introduciendo lectura **"<<endl;
-  cout<<"Dame la Lectura del canal AN"<<_canal<<endl;
-  cin>>_voltaje;
-
+  cout<<" Dame la Lectura del canal AN"<<_canal<<"(0v a 3.3v): ";
+  while(x==0 || _voltaje<0 || _voltaje>3.3){
+    cleanBuffIn();
+    x=scanf("%f",&_voltaje);
+    if(x==0){
+      cout<<" Error, la entrada es incorrecta"<<endl;
+      cout<<" Introduzca la lectura otra vez (0v a 3.3v): ";
+    }
+    if(x==1 && (_voltaje<0 || _voltaje>3.3)){
+      cout<<" Error, resolucion no soportada"<<endl;
+      cout<<" Introduzca la lectura otra vez (0v a 3.3v): ";
+    }
+  } 
   if(_Resolucion==8){
     _digital=_voltaje*255/3.3;
   }
