@@ -11,7 +11,6 @@
 #include<stdlib.h>
 #include <iostream>
 #include "ADC.hpp"
-#include "FrecM_3a.hpp"
 #include<string>
 void portada(void);
 /************************************************
@@ -27,8 +26,8 @@ int main() {
   cout<<" Introduzca el numero de canales a configurar:";
   cin>>cantidad;
 
-  FrecM_3a AN[cantidad];
-  cout<<endl<<"Se crearon: "<<ADC::getn_canales()<<" objeto(s)";
+  ADC AN[cantidad];
+  cout<<endl<<" Se crearon: "<<ADC::getn_canales()<<" objeto(s)";
 
   for(int i=0;i<cantidad;i++){
     AN[i].captura();

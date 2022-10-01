@@ -18,21 +18,20 @@ using namespace std;
 class ADC{
   private:
     int _Resolucion;
-    int _opcion;    
-    int _canal;
-    int _num;
-    static int n_canales;
-  public: 
     float _frec_m;
+    int _canal;
     float _voltaje;
     int _digital;
+    int _num;
+    static int n_canales;
+  public:    
     /************************************************
     *                 CONSTRUCTOR
     ************************************************/
-    ADC(int, int, float, int, float, int);
+    ADC(int, float, int, float, int);
     ADC();
     /************Metodo para mostrar los datos de la clase************/
-    virtual void muestradatos();
+    void muestradatos();
     /************Metodo Capturador************/
     void captura();
     /************GETTERS************/
