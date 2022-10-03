@@ -5,13 +5,12 @@
  // Description:     Uso de clases, herencias y Polimorfismo para diseñar un ADC de 32 canales, con resolucion de 8, 10 o 12 bits y un rango de entrada de 0 a 3.3v
  // Authors:         Jesus Adrian Guerra Delgado
  // Updated:         09/2022
- //Nota: Version 4
+ //Nota: Version 3a
 ************************************************************************************************************************/
 //30-09-2022
 #include<stdlib.h>
 #include <iostream>
 #include "ADC.hpp"
-#include "FrecM_3a.hpp"
 #include<string>
 void portada(void);
 /************************************************
@@ -23,12 +22,12 @@ int ADC::n_canales=0;
 ************************************************/
 int main() {
   portada();
-  int x=0;
   int cantidad;
   cout<<" Introduzca el numero de canales a configurar:";
   cin>>cantidad;
-  FrecM_3a AN[cantidad];
-  cout<<endl<<"Se crearon: "<<ADC::getn_canales()<<" objeto(s)";
+
+  ADC AN[cantidad];
+  cout<<endl<<" Se crearon: "<<ADC::getn_canales()<<" objeto(s)";
 
   for(int i=0;i<cantidad;i++){
     AN[i].captura();
@@ -41,7 +40,6 @@ int main() {
   }
   return 0;
 }
-/***********FUNCION portada********/
 void portada(void){
    printf("\t  Tecnologico Nacional de Mexico\n");
    printf("\t INSTITUTO TECNOLOGICO DE CHIHUAHUA\n");
