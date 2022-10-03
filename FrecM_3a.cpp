@@ -1,5 +1,5 @@
 /**********************************************************************************************************************
- // FileName:        ADC.hpp
+ // FileName:        FrecM_3a.cpp
  // Program version: Replit
  // Company:         TECNM - ITCH - Departamento Electrica Electronica - Especialidad de sistemas embebidos
  // Description:     Implementacion de la clase FrecM_3a
