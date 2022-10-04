@@ -70,52 +70,7 @@ void ADC::captura(){
       cout<<" Error, resolucion no soportada"<<endl;
       cout<<" Introduzca la resolucion otra vez (8, 10, 12 bits): ";
     }
-  }  
-  cout<<" Opciones para la Frecuencia de muestreo"<<endl;  
-  cout<<"   Opcion 1) Frecuencia de muestreo especifica"<<endl;
-  cout<<"   Opcion 2) Frecuencia de muestreo estantar de 125KHz a 4MHz"<<endl;
-  cout<<" Escoje una opcion: ";
-  while(y==0 || (_opcion!=1 && _opcion!=2)){
-    cleanBuffIn();
-    y=scanf("%d",&_opcion);
-    if(y==0){
-      cout<<" Error, la entrada es incorrecta"<<endl;
-      cout<<" Introduzca la opcion otra vez (1 o 2): ";
-    }
-    if(y==1 && (_opcion!=1 && _opcion!=2)){
-      cout<<" Error, opcion invalida"<<endl;
-      cout<<" Introduzca la opcion otra vez (1 o 2): ";
-    }
-  }
-  if(_opcion==1){
-    cout<<" Opcion 1) Frecuencia de muestreo especifica seleccionada"<<endl;
-    cout<<" Dame la Frecuencia de muestreo (Hz): ";
-    cin>>_frec_m;
-  }
-  if(_opcion==2){
-    cout<<" Opcion 2) Frecuencia de muestreo estandar de 125KHz a 4MHz seleccionada"<<endl;
-    cout<<" Factores para la frecuencia de muestreo"<<endl;
-    cout<<"  2 para 4MHz"<<endl;
-    cout<<"  4 para 2MHz"<<endl;
-    cout<<"  8 para 1MHz"<<endl;
-    cout<<"  16 para 500KHz"<<endl;
-    cout<<"  32 para 250KHz"<<endl;
-    cout<<"  64 para 125KHz"<<endl;
-    cout<<" Escoje el factor de division: ";
-    while(w==0 || (frec_m!=2 && frec_m!=4 && frec_m!=8 && frec_m!=16 && frec_m!=32 && frec_m!=64)){
-      cleanBuffIn();
-      w=scanf("%f",&frec_m);
-      if(w==0){
-        cout<<" Error, la entrada es incorrecta"<<endl;
-        cout<<" Introduzca el factor otra vez (2, 4, 8, 16 o 32): ";
-      }
-      if(w==1 && (frec_m!=2 && frec_m!=4 && frec_m!=8 && frec_m!=16 && frec_m!=32 && frec_m!=64)){
-        cout<<" Error, factor invalido"<<endl;
-        cout<<" Introduzca el factor otra vez (2, 4, 8, 16 o 32): ";
-      }
-    }
-    _frec_m=8000000/frec_m;
-  }
+  } 
   cout<<" Dame el No. de canal (1-32): ";
   while(z==0 || _canal<1 || _canal>32){
     cleanBuffIn();
@@ -128,7 +83,7 @@ void ADC::captura(){
       cout<<" Error, resolucion no soportada"<<endl;
       cout<<" Introduzca el No de canal otra vez (1-32): ";
     }
-  } 
+  }  
 }
 /************************************************
 *   			GETTERS
@@ -169,7 +124,37 @@ void ADC::capVoltaje(){
   }
   
 }
-
+void ADC::opcion1(){
+  cout<<" Opcion 1) Frecuencia de muestreo especifica seleccionada"<<endl;
+  cout<<" Dame la Frecuencia de muestreo (Hz): ";
+  cin>>_frec_m;
+}
+void ADC::opcion2(){
+  int w=0;
+  float frec_m;
+  cout<<" Opcion 2) Frecuencia de muestreo estandar de 125KHz a 4MHz seleccionada"<<endl;
+  cout<<" Factores para la frecuencia de muestreo"<<endl;
+  cout<<"  2 para 4MHz"<<endl;
+  cout<<"  4 para 2MHz"<<endl;
+  cout<<"  8 para 1MHz"<<endl;
+  cout<<"  16 para 500KHz"<<endl;
+  cout<<"  32 para 250KHz"<<endl;
+  cout<<"  64 para 125KHz"<<endl;
+  cout<<" Escoje el factor de division: ";
+  while(w==0 || (frec_m!=2 && frec_m!=4 && frec_m!=8 && frec_m!=16 && frec_m!=32 && frec_m!=64)){
+    cleanBuffIn();
+    w=scanf("%f",&frec_m);
+    if(w==0){
+      cout<<" Error, la entrada es incorrecta"<<endl;
+      cout<<" Introduzca el factor otra vez (2, 4, 8, 16 o 32): ";
+    }
+    if(w==1 && (frec_m!=2 && frec_m!=4 && frec_m!=8 && frec_m!=16 && frec_m!=32 && frec_m!=64)){
+      cout<<" Error, factor invalido"<<endl;
+      cout<<" Introduzca el factor otra vez (2, 4, 8, 16 o 32): ";
+    }
+  }
+  _frec_m=8000000/frec_m;
+}
 /***********FUNCION cleanBuffIn********/
 void cleanBuffIn(void){     /*FUNCION PARA LIMPIAR EL BUFFER DE ENTRADA EN SUSTITUCION DE fflush(stdin)*/
    int ch;

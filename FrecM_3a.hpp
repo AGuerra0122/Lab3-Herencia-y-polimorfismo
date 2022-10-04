@@ -22,7 +22,7 @@ class FrecM_3a: public ADC{
   public:
     FrecM_3a(int, char, float, int, float, int);
     FrecM_3a();
-
+    void captura();
     void muestradatos();
 };
 #endif
